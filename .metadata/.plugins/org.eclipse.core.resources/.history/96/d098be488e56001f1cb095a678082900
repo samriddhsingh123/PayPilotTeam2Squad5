@@ -1,0 +1,127 @@
+package model;
+
+public class Bill {
+    private String billCategory;
+    private String billDateFrom;
+    private String billDateTo;
+    private String billStatus;
+
+    public Bill(String billCategory, String billDateFrom, String billDateTo, String billStatus) {
+        this.billCategory = billCategory;
+        this.billDateFrom = billDateFrom;
+        this.billDateTo = billDateTo;
+        this.billStatus = billStatus;
+    }
+
+    public String getBillCategory() {
+        return billCategory;
+    }
+
+    public void setBillCategory(String billCategory) {
+        this.billCategory = billCategory;
+    }
+
+    public String getBillDateFrom() {
+        return billDateFrom;
+    }
+
+    public void setBillDateFrom(String billDateFrom) {
+        this.billDateFrom = billDateFrom;
+    }
+
+    public String getBillDateTo() {
+        return billDateTo;
+    }
+
+    public void setBillDateTo(String billDateTo) {
+        this.billDateTo = billDateTo;
+    }
+
+    public String getBillStatus() {
+        return billStatus;
+    }
+
+    public void setBillStatus(String billStatus) {
+        this.billStatus = billStatus;
+    }
+
+    @Override
+    public String toString() {
+        return "Bill [Category=" + billCategory + ", DateFrom=" + billDateFrom + ", DateTo=" + billDateTo + ", Status=" + billStatus + "]";
+    }
+}
+
+class DebtPaymentsBill extends Bill {
+    private String loanType;
+    private double monthlyEMI;
+    private double totalLoanAmount;
+
+    public DebtPaymentsBill(String billDateFrom, String billDateTo, String billStatus, String loanType, double monthlyEMI, double totalLoanAmount) {
+        super("Debt Payments", billDateFrom, billDateTo, billStatus);
+        this.loanType = loanType;
+        this.monthlyEMI = monthlyEMI;
+        this.totalLoanAmount = totalLoanAmount;
+    }
+
+    public String getLoanType() {
+        return loanType;
+    }
+
+    public void setLoanType(String loanType) {
+        this.loanType = loanType;
+    }
+
+    public double getMonthlyEMI() {
+        return monthlyEMI;
+    }
+
+    public void setMonthlyEMI(double monthlyEMI) {
+        this.monthlyEMI = monthlyEMI;
+    }
+
+    public double getTotalLoanAmount() {
+        return totalLoanAmount;
+    }
+
+    public void setTotalLoanAmount(double totalLoanAmount) {
+        this.totalLoanAmount = totalLoanAmount;
+    }
+
+    @Override
+    public String toString() {
+        return "DebtPaymentsBill [LoanType=" + loanType + ", MonthlyEMI=" + monthlyEMI + ", TotalLoanAmount=" + totalLoanAmount + "] " + super.toString();
+    }
+}
+
+class HouseRentBill extends Bill {
+    private String month;
+    private double amount;
+
+    public HouseRentBill(String billDateFrom, String billDateTo, String billStatus, String month, double amount) {
+        super("House Rent", billDateFrom, billDateTo, billStatus);
+        this.month = month;
+        this.amount = amount;
+    }
+
+    public String getMonth() {
+        return month;
+    }
+
+    public void setMonth(String month) {
+        this.month = month;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    @Override
+    public String toString() {
+        return "HouseRentBill [Month=" + month + ", Amount=" + amount + "] " + super.toString();
+    }
+}
+

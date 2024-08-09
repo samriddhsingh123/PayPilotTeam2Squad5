@@ -1,0 +1,39 @@
+package service;
+import model.Bill;
+import repo.BillRepository;;
+
+import java.util.Date;
+import java.util.List;
+
+public class BillManager {
+    private BillRepository billRepository = new BillRepository();
+
+    public List<Bill> getBillsOverview(String category, Date fromDate, Date toDate, String status) {
+        List<Bill> bills = billRepository.findByCategory(category);
+        return bills.stream()
+                .filter(bill -> bill.getDueDate().after(fromDate) && bill.getDueDate().before(toDate) && bill.getPaymentStatus().equalsIgnoreCase(status))
+                .collect(Collectors.toList());
+    }
+
+    public void addNewBill(Bill bill) {
+        billRepository.save(bill);
+    }
+
+    public List<Bill> getOverdueBills() {
+        return billRepository.findOverdueBills();
+    }
+
+    public List<Bill> getUpcomingBills() {
+        return billRepository.findUpcomingBills();
+    }
+
+    public void snoozeBill(Bill bill, Date snoozeDate) {
+        bill.setDueDate(snoozeDate);
+        billRepository.update(bill);
+    }
+
+    public void markBillAsPaid(Bill bill) {
+        bill.setPaymentStatus("Paid");
+        billRepository.update(bill);
+    }
+}
