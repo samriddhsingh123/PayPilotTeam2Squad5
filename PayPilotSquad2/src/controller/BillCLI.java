@@ -144,13 +144,17 @@ public class BillCLI {
     private static void viewOverdueBills() {
         System.out.println("\nView Overdue Bills:");
         List<Bill> overdueBills = billController.getOverdueBills();
-        displayBills(overdueBills);
+        
+        if (overdueBills.isEmpty()) {System.out.println("No Overdue Bills Found.");}
+        else {displayBills(overdueBills);}
     }
 
     private static void viewUpcomingBills() {
         System.out.println("\nView Upcoming Bills:");
         List<Bill> upcomingBills = billController.getUpcomingBills();
-        displayBills(upcomingBills);
+        
+        if (upcomingBills.isEmpty()) {System.out.println("No Upcoming Bills Found.");}
+        else {displayBills(upcomingBills);}
     }
 
     private static void snoozeBill() {

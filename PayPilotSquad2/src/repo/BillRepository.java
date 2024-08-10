@@ -27,15 +27,19 @@ public class BillRepository {
     }
 
     public List<Bill> getOverdueBills() {
+    	Date today = new Date();
         return bills.stream()
-                .filter(bill -> "Pending".equalsIgnoreCase(bill.getPaymentStatus()) && bill.getOverdueDays() > 0)
+                .filter(bill -> bill.getDueDate().before(today) && 
+                		(bill.getPaymentStatus().equalsIgnoreCase("Not Paid") || bill.getPaymentStatus().equalsIgnoreCase("Partially Paid")))
                 .collect(Collectors.toList());
     }
 
     public List<Bill> getUpcomingBills() {
+    	Date today = new Date();
         return bills.stream()
-                .filter(bill -> "Upcoming".equalsIgnoreCase(bill.getPaymentStatus()))
-                .collect(Collectors.toList());
+                .filter(bill -> (bill.getDueDate().equals(today)|| bill.getDueDate().after(today)) && 
+                		(bill.getPaymentStatus().equalsIgnoreCase("Not Paid") || bill.getPaymentStatus().equalsIgnoreCase("Partially Paid")))
+                .collect(Collectors.toList()); 
     }
 
     public Bill getBillById(int billId) {
