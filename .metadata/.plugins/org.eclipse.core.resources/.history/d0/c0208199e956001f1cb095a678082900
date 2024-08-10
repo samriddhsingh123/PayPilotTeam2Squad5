@@ -23,12 +23,12 @@ public class BillController {
         return billService.getUpcomingBills();
     }
 
-    public int snoozeBill(int billId, Date snoozeDate) {
-        return billService.snoozeBill(billId, snoozeDate);
+    public void snoozeBill(int billId, Date snoozeDate) {
+        billService.snoozeBill(billId, snoozeDate);
     }
 
-    public int markBillAsPaid(int billId) {
-       return billService.markBillAsPaid(billId);
+    public void markBillAsPaid(int billId) {
+        billService.markBillAsPaid(billId);
     }
 
     public int getNextBillId() {

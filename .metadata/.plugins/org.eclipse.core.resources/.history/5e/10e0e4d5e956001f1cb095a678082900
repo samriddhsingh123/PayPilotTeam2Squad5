@@ -168,11 +168,8 @@ public class BillCLI {
             return;
         }
 
-        int a=billController.snoozeBill(billId, snoozeDate);
-        if(a==0) {
-        	System.out.println("No bill is there with id: "+billId);
-        }
-        if(a==1) System.out.println("Bill snoozed successfully!");
+        billController.snoozeBill(billId, snoozeDate);
+        System.out.println("Bill snoozed successfully!");
     }
 
     private static void markBillAsPaid() {
@@ -181,12 +178,8 @@ public class BillCLI {
         int billId = scanner.nextInt();
         scanner.nextLine();
 
-        int a=billController.markBillAsPaid(billId);
-        if(a==0) {
-        	System.out.println("No bill is there with id: "+billId);
-        }
-        if(a==1)
-        	System.out.println("Bill marked as paid!");
+        billController.markBillAsPaid(billId);
+        System.out.println("Bill marked as paid!");
     }
 
     private static void displayBills(List<Bill> bills) {

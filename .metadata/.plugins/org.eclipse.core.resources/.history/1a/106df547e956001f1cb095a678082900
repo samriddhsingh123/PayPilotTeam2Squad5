@@ -27,26 +27,21 @@ public class BillService {
         return billRepository.getUpcomingBills();
     }
 
-    public int snoozeBill(int billId, Date newDueDate) {
+    public void snoozeBill(int billId, Date newDueDate) {
         Bill bill = billRepository.getBillById(billId);
         if (bill != null) {
             bill.setDueDate(newDueDate);
             billRepository.updateBill(bill);
-            return 1;
         }
-        return 0;
     }
 
-    public int markBillAsPaid(int billId) {
+    public void markBillAsPaid(int billId) {
         Bill bill = billRepository.getBillById(billId);
         if (bill != null) {
             bill.setPaymentStatus("Paid");
             bill.setOverdueDays(0);
             billRepository.updateBill(bill);
-            return 1;
-            
         }
-        return 0;
     }
 
     public int getNextBillId() {
