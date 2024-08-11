@@ -82,6 +82,8 @@ public class ReminderTest {
 	    assertEquals("Updated Reminder Message", updatedReminder.getCustomMessage());
 	}
 
+	
+	
 	//tests DeleteReminder method of the service class
 	@Test
 	public void testDeleteReminder() {
