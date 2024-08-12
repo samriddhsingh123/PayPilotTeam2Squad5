@@ -1,7 +1,7 @@
 package controller;
+
 import model.Bill;
 import repo.BillRepository;
-
 import java.util.Date;
 import java.util.List;
 import java.io.File;
@@ -10,16 +10,26 @@ import java.text.SimpleDateFormat;
 import java.util.Scanner;
 import model.ReminderSettings;
 
-
-
+/**
+ * The BillCLI class provides a command-line interface for managing bills and reminders.
+ * Author: [Samriddh Singh]
+ * Date: [11-08-2024]
+ */
 public class BillCLI {
+
+    // Controllers to handle business logic
     private static BillController billController = new BillController();
     private static ReminderController reminderController = new ReminderController();
+
+    // Scanner for user input
     private static Scanner scanner = new Scanner(System.in);
+    
+    // Date format for input/output
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
     public static void main(String[] args) {
-    	while (true) {
+        // Main loop for the CLI
+        while (true) {
             System.out.println("\nBill Management System");
             System.out.println("1. Add New Bill");
             System.out.println("2. View Bills Overview");
@@ -33,6 +43,7 @@ public class BillCLI {
             int choice = scanner.nextInt();
             scanner.nextLine(); // consume newline
 
+            // Handle user choice
             switch (choice) {
                 case 1:
                     addNewBill();
@@ -65,8 +76,13 @@ public class BillCLI {
         }
     }
 
+    /**
+     * Adds a new bill to the system.
+     */
     private static void addNewBill() {
         System.out.println("\nAdd New Bill:");
+
+        // Gather bill details from user
         System.out.print("Bill Name: ");
         String billName = scanner.nextLine();
 
@@ -84,7 +100,7 @@ public class BillCLI {
 
         System.out.print("Amount: ");
         double amount = scanner.nextDouble();
-        scanner.nextLine();
+        scanner.nextLine(); // consume newline
 
         System.out.print("Reminder Frequency (Daily/Weekly/Monthly): ");
         String reminderFrequency = scanner.nextLine();
@@ -98,20 +114,28 @@ public class BillCLI {
 
         System.out.print("Is Recurring (true/false): ");
         boolean isRecurring = scanner.nextBoolean();
-        scanner.nextLine();
+        scanner.nextLine(); // consume newline
 
         System.out.print("Payment Status (Pending/Upcoming/Paid): ");
         String paymentStatus = scanner.nextLine();
 
+        // Create a new Bill object
         int billId = billController.getNextBillId();
         Bill newBill = new Bill(billId, billName, billCategory, dueDate, amount, reminderFrequency, attachment, notes, isRecurring, paymentStatus, 0);
+
+        // Add the new bill to the system
         billController.addNewBill(newBill);
 
         System.out.println("Bill added successfully!");
     }
 
+    /**
+     * Displays an overview of bills based on user-specified criteria.
+     */
     private static void viewBillsOverview() {
         System.out.println("\nView Bills Overview:");
+
+        // Get filter criteria from user
         System.out.print("Bill Category (All, Debt Payments, House Rent, etc.): ");
         String category = scanner.nextLine();
 
@@ -136,27 +160,39 @@ public class BillCLI {
         System.out.print("Bill Status (Upcoming/Pending/Paid): ");
         String status = scanner.nextLine();
 
+        // Fetch and display bills based on the criteria
         List<Bill> bills = billController.getBillsOverview(category, fromDate, toDate, status);
         displayBills(bills);
     }
 
+    /**
+     * Displays all overdue bills.
+     */
     private static void viewOverdueBills() {
         System.out.println("\nView Overdue Bills:");
         List<Bill> overdueBills = billController.getOverdueBills();
         displayBills(overdueBills);
     }
 
+    /**
+     * Displays all upcoming bills.
+     */
     private static void viewUpcomingBills() {
         System.out.println("\nView Upcoming Bills:");
         List<Bill> upcomingBills = billController.getUpcomingBills();
         displayBills(upcomingBills);
     }
 
+    /**
+     * Allows the user to snooze a bill by changing its due date.
+     */
     private static void snoozeBill() {
         System.out.println("\nSnooze a Bill:");
+
+        // Get bill ID and new due date from user
         System.out.print("Enter Bill ID: ");
         int billId = scanner.nextInt();
-        scanner.nextLine();
+        scanner.nextLine(); // consume newline
 
         System.out.print("New Due Date (dd-MM-yyyy): ");
         Date snoozeDate = null;
@@ -167,20 +203,31 @@ public class BillCLI {
             return;
         }
 
+        // Update the bill's due date
         billController.snoozeBill(billId, snoozeDate);
         System.out.println("Bill snoozed successfully!");
     }
 
+    /**
+     * Marks a bill as paid.
+     */
     private static void markBillAsPaid() {
         System.out.println("\nMark Bill as Paid:");
+
+        // Get bill ID from user
         System.out.print("Enter Bill ID: ");
         int billId = scanner.nextInt();
-        scanner.nextLine();
+        scanner.nextLine(); // consume newline
 
+        // Update the bill's status to paid
         billController.markBillAsPaid(billId);
         System.out.println("Bill marked as paid!");
     }
 
+    /**
+     * Displays the list of bills.
+     * @param bills List of bills to display
+     */
     private static void displayBills(List<Bill> bills) {
         if (bills.isEmpty()) {
             System.out.println("No bills found.");
@@ -202,7 +249,10 @@ public class BillCLI {
             }
         }
     }
-    
+
+    /**
+     * Manages the reminder settings.
+     */
     private static void manageReminderSettings() {
         System.out.println("\nManage Reminder Settings:");
         System.out.println("1. Add a New Reminder");
@@ -212,6 +262,7 @@ public class BillCLI {
         int choice = scanner.nextInt();
         scanner.nextLine(); // consume newline
 
+        // Handle user choice
         switch (choice) {
             case 1:
                 addReminder();
@@ -227,9 +278,13 @@ public class BillCLI {
         }
     }
 
+    /**
+     * Adds a new reminder to the system.
+     */
     private static void addReminder() {
         System.out.println("\nAdd New Reminder:");
 
+        // Get reminder details from user
         System.out.print("Reminder Frequency (Daily/Weekly/Monthly): ");
         String reminderFrequency = scanner.nextLine();
 
@@ -253,8 +308,13 @@ public class BillCLI {
         System.out.println("Reminder added successfully!");
     }
 
+    /**
+     * Updates an existing reminder.
+     */
     private static void updateReminder() {
         System.out.println("\nUpdate Existing Reminder:");
+
+        // Get reminder ID and new details from user
         System.out.print("Enter Reminder ID: ");
         int reminderId = scanner.nextInt();
         scanner.nextLine(); // consume newline
@@ -282,8 +342,13 @@ public class BillCLI {
         System.out.println("Reminder updated successfully!");
     }
 
+    /**
+     * Deletes a reminder from the system.
+     */
     private static void deleteReminder() {
         System.out.println("\nDelete Reminder:");
+
+        // Get reminder ID from user
         System.out.print("Enter Reminder ID: ");
         int reminderId = scanner.nextInt();
         scanner.nextLine(); // consume newline
@@ -292,8 +357,4 @@ public class BillCLI {
         reminderController.deleteReminder(reminderId);
         System.out.println("Reminder deleted successfully!");
     }
-
-
-    
-    
 }
