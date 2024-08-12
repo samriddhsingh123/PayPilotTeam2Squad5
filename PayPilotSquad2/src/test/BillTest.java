@@ -47,10 +47,10 @@ public class BillTest {
     /**
      * Dummy test method to be implemented or removed.
      */
-    @Test
-    public void test() {
-        fail("Not yet implemented");
-    }
+//    @Test
+//    public void test() {
+//        fail("Not yet implemented");
+//    }
 
     /**
      * Test for adding a new bill.
