@@ -204,8 +204,12 @@ public class BillCLI {
         }
 
         // Update the bill's due date
-        billController.snoozeBill(billId, snoozeDate);
-        System.out.println("Bill snoozed successfully!");
+        int b=billController.snoozeBill(billId, snoozeDate);
+        
+        if(b==1)
+        	System.out.println("Bill snoozed successfully!");
+         else 
+        	 System.out.println("No Bill is there with id: "+billId);
     }
 
     /**
@@ -220,8 +224,11 @@ public class BillCLI {
         scanner.nextLine(); // consume newline
 
         // Update the bill's status to paid
-        billController.markBillAsPaid(billId);
+       int a= billController.markBillAsPaid(billId);
+       if(a==1)
         System.out.println("Bill marked as paid!");
+       else 
+    	   System.out.println("No Bill is there with id: "+billId);
     }
 
     /**
